@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Href Attribute Example</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+          src="https://code.jquery.com/jquery-3.6.0.min.js"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+          crossorigin="anonymous"></script>
+
+  <script  th:inline="javascript">
+            function getAirports() {
+              var cityId = $('#fromCitySelect').val();
+              console.log("selected city "+ cityId)
+              $.ajax({
+                       type: "GET",
+                       url: "/travel/airport/" + cityId,
+                       dataType: 'JSON',
+                       success: function (data) {
+                         var option = "";
+                         option += "<option value = " + 0 + ">Choose</option>";
+                         $.each(data, function(k, v) {
+                           option += "<option value = " + k + ">" + v + "</option>";
+                         });
+                         $("#fromAirportSelect").find('option').remove().end().append(option);
+                       }
+                     });
+            }
+
+            function fillAirportsAndHotels() {
+              var cityId = $('#toCitySelect').val();
+              console.log("selected city "+ cityId)
+              $.ajax({
+                       type: "GET",
+                       url: "/travel/airport/" + cityId,
+                       dataType: 'JSON',
+                       success: function (data) {
+                         var option = "";
+                         $.each(data, function(k, v) {
+                           option += "<option value = " + k + ">" + v + "</option>";
+                         });
+                         $("#toAirportSelect").find('option').remove().end().append(option);
+                       }
+                     });
+
+              $.ajax({
+                       type: "GET",
+                       url: "/travel/hotel/" + cityId,
+                       dataType: 'JSON',
+                       success: function (data) {
+                         var option = "";
+                         $.each(data, function(k, v) {
+                           option += "<option value = " + k + ">" + v + "</option>";
+                         });
+                         $("#toHotelSelect").find('option').remove().end().append(option);
+                       }
+                     });
+            }
+        </script>
+
+</head>
+<body style="background-color: #F9F9F9;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #F9F9F9;">
+  <div class="container-fluid">
+    <a class="navbar-brand" th:href="@{/admin}" style="color: #2F5061; font-weight: 700">TravelOffice</a>
+    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link"  th:href="@{/admin/continents}" style="color: #2F5061; font-weight: 600">Kontynenty</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link"  th:href="@{/admin/countries}" style="color: #2F5061; font-weight: 600">Kraje</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link"  th:href="@{/admin/cities}" style="color: #2F5061; font-weight: 600">Miasta</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link"  th:href="@{/admin/hotels}" style="color: #2F5061; font-weight: 600">Hotele</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link"  th:href="@{/admin/airports}" style="color: #2F5061; font-weight: 600">Lotniska</a>
+        </li>
+      </div>
+    </div>
+  </div>
+</nav>
+<hr style="margin:0"/>
+
+<div class="container" style="background-color: white; padding: 15px; border-radius: 10px; margin-top: 100px">
+  <h3 style="font-weight: 900"><string>Dodaj kraj</string></h3>
+  <form action="#" th:action="@{/admin/country/add}" th:object="${newCountry}" method="post">
+    <div class="form-group">
+      <label for="continent">Kontynent</label>
+      <select class="form-control" th:field="*{continentId}" id="continent">
+        <option th:each="continent : ${continents}" th:text="${continent.name}" th:value="${continent.id}">
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="name">Pańśtwo</label>
+      <input class="form-control" id="name" th:field="*{name}">
+    </div>
+    <button style="margin-top: 10px" class="btn btn-primary" type="submit">Dodaj</button>
+  </form>
+
+  <table class="table table-bordered" style="margin-top: 20px">
+    <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nazwa</th>
+      <th scope="col">Kontynent</th>
+      <th scope="col">Akcja</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="country : ${countries}">
+      <tr>
+        <td>
+          <span th:text="${country.id}"></span>
+        </td>
+        <td>
+          <span th:text="${country.name}"></span>
+        </td>
+        <td>
+          <span th:text="${country.continentName}"></span>
+        </td>
+        <td>
+          <form method="post" th:action="@{/admin/countries/delete/{id}(id=${country.id})}">
+            <button class="btn btn-danger" type="submit">Usuń</button>
+          </form>
+        </td>
+      </tr>
+    </th:block>
+    </tbody>
+  </table>
+
+</div>
+
+</body>
+</html>
