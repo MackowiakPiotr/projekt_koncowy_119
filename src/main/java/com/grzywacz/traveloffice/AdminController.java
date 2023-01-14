@@ -4,19 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.grzywacz.traveloffice.airport.AirportDto;
-import com.grzywacz.traveloffice.airport.AirportRepository;
 import com.grzywacz.traveloffice.airport.AirportService;
 import com.grzywacz.traveloffice.city.CityDto;
-import com.grzywacz.traveloffice.city.CityRepository;
 import com.grzywacz.traveloffice.city.CityService;
 import com.grzywacz.traveloffice.continent.ContinentDto;
 import com.grzywacz.traveloffice.continent.ContinentService;
 import com.grzywacz.traveloffice.country.CountryDto;
 import com.grzywacz.traveloffice.country.CountryService;
 import com.grzywacz.traveloffice.hotels.HotelDto;
-import com.grzywacz.traveloffice.hotels.HotelRepository;
 import com.grzywacz.traveloffice.hotels.HotelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,32 +21,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    private CityRepository cityRepository;
+    private final TravelService travelService;
+    private final ContinentService continentService;
+    private final CountryService countryService;
+    private final CityService cityService;
+    private final HotelService hotelService;
+    private final AirportService airportService;
 
-    @Autowired
-    private AirportRepository airportRepository;
-
-    @Autowired
-    private HotelRepository hotelRepository;
-
-    @Autowired
-    private TravelService travelService;
-
-    @Autowired
-    private ContinentService continentService;
-
-    @Autowired
-    private CountryService countryService;
-
-    @Autowired
-    private CityService cityService;
-
-    @Autowired
-    private HotelService hotelService;
-
-    @Autowired
-    private AirportService airportService;
+    public AdminController(TravelService travelService, ContinentService continentService, CountryService countryService, CityService cityService, HotelService hotelService,
+                           AirportService airportService) {
+        this.travelService = travelService;
+        this.continentService = continentService;
+        this.countryService = countryService;
+        this.cityService = cityService;
+        this.hotelService = hotelService;
+        this.airportService = airportService;
+    }
 
     @GetMapping
     public String travels(Model model) {
@@ -66,17 +52,17 @@ public class AdminController {
     }
 
     @GetMapping("/travel/add")
-    public String showSignUpForm(Model model) {
+    public String addTravel(Model model) {
         model.addAttribute("createTravel", new CreateTravelDto());
-        model.addAttribute("cities", cityRepository.findAll());
+        model.addAttribute("cities", cityService.getCities());
         model.addAttribute("hotelTypes", Arrays.stream(HotelType.values()).toList());
-        return "add-travel";
+        return "admin/add-travel";
     }
 
     @GetMapping("/travel/edit/{id}")
     public String travelEdit(Model model, @PathVariable long id ) {
         TravelDto travel = travelService.getTravelById(id);
-        model.addAttribute("cities", cityRepository.findAll());
+      //  model.addAttribute("cities", cityRepository.findAll());
         model.addAttribute("travel", travel);
         return "admin/edit-travel";
     }
@@ -84,7 +70,7 @@ public class AdminController {
     @PostMapping(value = "/travel/add")
     public String postBody(@ModelAttribute CreateTravelDto createTravelDto, Model model) {
         travelService.createTravel(createTravelDto);
-        return "redirect:/admin/travels";
+        return "redirect:/admin";
     }
 
     @GetMapping("/continents")
