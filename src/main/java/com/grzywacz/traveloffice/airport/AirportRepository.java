@@ -1,6 +1,5 @@
 package com.grzywacz.traveloffice.airport;
 
-import com.grzywacz.traveloffice.Airport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

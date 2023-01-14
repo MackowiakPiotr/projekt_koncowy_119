@@ -1,4 +1,4 @@
-package com.grzywacz.traveloffice;
+package com.grzywacz.traveloffice.travel;
 
 import lombok.Builder;
 import lombok.Data;

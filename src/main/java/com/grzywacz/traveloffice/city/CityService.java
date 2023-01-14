@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.grzywacz.traveloffice.City;
-import com.grzywacz.traveloffice.Continent;
-import com.grzywacz.traveloffice.Country;
-import com.grzywacz.traveloffice.country.CountryDto;
+import com.grzywacz.traveloffice.country.Country;
 import com.grzywacz.traveloffice.country.CountryRepository;
 import org.springframework.stereotype.Service;
 

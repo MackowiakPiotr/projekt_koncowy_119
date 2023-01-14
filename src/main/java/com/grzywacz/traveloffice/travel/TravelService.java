@@ -1,12 +1,16 @@
-package com.grzywacz.traveloffice;
+package com.grzywacz.traveloffice.travel;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.grzywacz.traveloffice.hotels.HotelType;
+import com.grzywacz.traveloffice.airport.Airport;
 import com.grzywacz.traveloffice.airport.AirportRepository;
+import com.grzywacz.traveloffice.city.City;
 import com.grzywacz.traveloffice.city.CityRepository;
+import com.grzywacz.traveloffice.hotels.Hotel;
 import com.grzywacz.traveloffice.hotels.HotelRepository;
 import org.springframework.stereotype.Service;
 

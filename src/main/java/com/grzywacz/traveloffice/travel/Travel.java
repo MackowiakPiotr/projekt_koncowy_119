@@ -1,8 +1,12 @@
-package com.grzywacz.traveloffice;
+package com.grzywacz.traveloffice.travel;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Basic;
+import com.grzywacz.traveloffice.BasicEntity;
+import com.grzywacz.traveloffice.hotels.HotelType;
+import com.grzywacz.traveloffice.airport.Airport;
+import com.grzywacz.traveloffice.city.City;
+import com.grzywacz.traveloffice.hotels.Hotel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,10 @@
-package com.grzywacz.traveloffice;
+package com.grzywacz.traveloffice.country;
 
 import java.util.Set;
 
+import com.grzywacz.traveloffice.BasicEntity;
+import com.grzywacz.traveloffice.continent.Continent;
+import com.grzywacz.traveloffice.city.City;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

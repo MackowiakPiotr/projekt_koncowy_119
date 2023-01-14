@@ -1,4 +1,4 @@
-package com.grzywacz.traveloffice;
+package com.grzywacz.traveloffice.hotels;
 
 public enum Star {
     ONE(1),TWO(2),THREE(3),FOUR(4),FIVE(5);

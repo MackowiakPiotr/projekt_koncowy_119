@@ -4,12 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.grzywacz.traveloffice.Airport;
-import com.grzywacz.traveloffice.City;
-import com.grzywacz.traveloffice.Hotel;
-import com.grzywacz.traveloffice.Star;
+import com.grzywacz.traveloffice.city.City;
 import com.grzywacz.traveloffice.city.CityRepository;
-import com.grzywacz.traveloffice.hotels.HotelDto;
 import org.springframework.stereotype.Service;
 
 @Service

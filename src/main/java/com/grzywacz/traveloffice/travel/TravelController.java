@@ -1,12 +1,15 @@
-package com.grzywacz.traveloffice;
+package com.grzywacz.traveloffice.travel;
 
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
+import com.grzywacz.traveloffice.airport.Airport;
 import com.grzywacz.traveloffice.airport.AirportRepository;
+import com.grzywacz.traveloffice.city.City;
 import com.grzywacz.traveloffice.city.CityRepository;
+import com.grzywacz.traveloffice.hotels.Hotel;
 import com.grzywacz.traveloffice.hotels.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

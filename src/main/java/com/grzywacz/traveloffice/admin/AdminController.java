@@ -1,8 +1,12 @@
-package com.grzywacz.traveloffice;
+package com.grzywacz.traveloffice.admin;
 
 import java.util.Arrays;
 import java.util.List;
 
+import com.grzywacz.traveloffice.travel.CreateTravelDto;
+import com.grzywacz.traveloffice.hotels.HotelType;
+import com.grzywacz.traveloffice.travel.TravelDto;
+import com.grzywacz.traveloffice.travel.TravelService;
 import com.grzywacz.traveloffice.airport.AirportDto;
 import com.grzywacz.traveloffice.airport.AirportService;
 import com.grzywacz.traveloffice.city.CityDto;

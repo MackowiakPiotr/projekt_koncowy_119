@@ -1,5 +1,7 @@
-package com.grzywacz.traveloffice;
+package com.grzywacz.traveloffice.travel;
 
+import com.grzywacz.traveloffice.BasicEntity;
+import com.grzywacz.traveloffice.travel.Travel;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

@@ -3,7 +3,6 @@ package com.grzywacz.traveloffice.continent;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.grzywacz.traveloffice.Continent;
 import org.springframework.stereotype.Service;
 
 @Service

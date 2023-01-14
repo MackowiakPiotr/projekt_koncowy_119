@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.grzywacz.traveloffice.Continent;
-import com.grzywacz.traveloffice.Country;
+import com.grzywacz.traveloffice.continent.Continent;
 import com.grzywacz.traveloffice.continent.ContinentRepository;
 import org.springframework.stereotype.Service;
 
