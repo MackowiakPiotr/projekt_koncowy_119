@@ -52,7 +52,7 @@ public class AdminController {
     @PostMapping("/travel/delete/{id}")
     public String delete(Model model, @PathVariable long id ) {
         travelService.delete(id);
-        return "redirect:/admin/travels";
+        return "redirect:/admin";
     }
 
     @GetMapping("/travel/add")
@@ -121,9 +121,12 @@ public class AdminController {
     }
 
     @GetMapping("/cities")
-    public String cities(Model model) {
+    public String cities(Model model, @RequestParam(required = false) String cityValidation) {
         List<CountryDto> countries = countryService.getCountries();
         List<CityDto> cities = cityService.getCities();
+        if (cityValidation!=null && cityValidation.equals("false")) {
+            model.addAttribute("cityCanBeDelete", "false");
+        }
         model.addAttribute("cities", cities);
         model.addAttribute("countries", countries);
         model.addAttribute("newCity", new CityDto());
@@ -139,14 +142,22 @@ public class AdminController {
 
     @PostMapping("/city/delete/{id}")
     public String deleteCity(Model model, @PathVariable long id ) {
-        cityService.deleteById(id);
-        return "redirect:/admin/cities";
+        boolean validationResult = cityService.checkCityCanBeDelete(id);
+        if (!validationResult) {
+            return "redirect:/admin/cities?cityValidation=false";
+        } else {
+            cityService.deleteById(id);
+            return "redirect:/admin/cities";
+        }
     }
 
     @GetMapping("/hotels")
-    public String hotels(Model model) {
+    public String hotels(Model model, @RequestParam(required = false) String hotelValidation) {
         List<HotelDto> hotels = hotelService.getHotels();
         List<CityDto> cities = cityService.getCities();
+        if (hotelValidation!=null && hotelValidation.equals("false")) {
+            model.addAttribute("hotelCanBeDelete", "false");
+        }
         model.addAttribute("hotels", hotels);
         model.addAttribute("cities", cities);
         model.addAttribute("newHotel", new HotelDto());
@@ -160,9 +171,14 @@ public class AdminController {
     }
 
     @PostMapping("/hotel/delete/{id}")
-    public String deleteHotel(Model model, @PathVariable long id ) {
-        hotelService.deleteById(id);
-        return "redirect:/admin/hotels";
+    public String deleteHotel(@PathVariable long id ) {
+        boolean validationResult = hotelService.checkHotelCanBeDelete(id);
+        if (!validationResult) {
+            return "redirect:/admin/hotels?hotelValidation=false";
+        } else {
+            hotelService.deleteById(id);
+            return "redirect:/admin/hotels";
+        }
     }
 
     @GetMapping("/airports")

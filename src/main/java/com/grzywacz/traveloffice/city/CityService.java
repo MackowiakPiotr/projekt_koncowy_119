@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import com.grzywacz.traveloffice.country.Country;
 import com.grzywacz.traveloffice.country.CountryRepository;
+import com.grzywacz.traveloffice.travel.Travel;
+import com.grzywacz.traveloffice.travel.TravelRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,9 +17,12 @@ public class CityService {
 
     private final CountryRepository countryRepository;
 
-    public CityService(CityRepository cityRepository, CountryRepository countryRepository) {
+    private final TravelRepository travelRepository;
+
+    public CityService(CityRepository cityRepository, CountryRepository countryRepository, TravelRepository travelRepository) {
         this.cityRepository = cityRepository;
         this.countryRepository = countryRepository;
+        this.travelRepository = travelRepository;
     }
 
     public List<CityDto> getCities() {
@@ -38,6 +43,15 @@ public class CityService {
         });
     }
     public void deleteById(long id){
-        countryRepository.deleteById(id);
+        cityRepository.deleteById(id);
+    }
+
+    public boolean checkCityCanBeDelete(long id) {
+        List<Travel> byFromCityOrToCity = travelRepository.findByFromCityOrToCity(id);
+        if (byFromCityOrToCity.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

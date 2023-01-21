@@ -16,31 +16,45 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/")
-public class TravelController {
+@RequestMapping("/reservation")
+public class ReservationController {
     private final TravelService travelService;
 
     private final CityRepository cityRepository;
     private final AirportRepository airportRepository;
     private final HotelRepository hotelRepository;
 
-    public TravelController(TravelService travelService, CityRepository cityRepository, AirportRepository airportRepository, HotelRepository hotelRepository) {
+    public ReservationController(TravelService travelService, CityRepository cityRepository, AirportRepository airportRepository, HotelRepository hotelRepository) {
         this.travelService = travelService;
         this.cityRepository = cityRepository;
         this.airportRepository = airportRepository;
         this.hotelRepository = hotelRepository;
     }
 
-    @GetMapping("/home")
-    public String showTravels(Model model) {
-        List<TravelDto> travels = travelService.getTravels();
-        List<TravelDto> promotingTravels = travels.stream().filter(TravelDto::getIsPromoted).toList();
-        travels = travels.stream().limit(3).toList();
+    @GetMapping("/{travelId}")
+    public String reserveView(Model model, @PathVariable long travelId,
+                              @RequestParam(value="adult",required=false) Integer adult,
+                              @RequestParam(value = "children", required = false) Integer children) {
 
-        model.addAttribute("travels", travels);
-        model.addAttribute("promotingTravels", promotingTravels);
-        return "travels";
+        TravelReservationDto travelReservationDto = new TravelReservationDto();
+        travelReservationDto.simpleAdultDtos = new ArrayList<>();
+        if (adult !=null && adult > 0) {
+            model.addAttribute("adult", adult);
+            for (int i=0; i<adult; i++) {
+                travelReservationDto.simpleAdultDtos.add(new SimpleAdultDto());
+            }
+            model.addAttribute("travelReservationDto", travelReservationDto);
+        }
+        if (children !=null && children > 0) {
+            model.addAttribute("children", children);
+        }
+
+
+        TravelDto travelById = travelService.getTravelById(travelId);
+        model.addAttribute("travel", travelById);
+        return "reservation";
     }
+/*
 
     @GetMapping("/search")
     public String search(Model model,
@@ -56,8 +70,6 @@ public class TravelController {
             filteredTravels = filteredTravels.stream().filter(it -> it.getCityTo().equals(cityTo)).collect(Collectors.toList());
         }
         model.addAttribute("travels", filteredTravels);
-        model.addAttribute("cityTo", cityTo);
-        model.addAttribute("cityFrom", cityFrom);
         return "search";
     }
 
@@ -91,5 +103,26 @@ public class TravelController {
         model.addAttribute("travel", travelById);
         return "/travel-details";
     }
+
+*/
+
+
+/*
+
+
+
+    @GetMapping("/travel-details")
+    public String travelDetails(Model model) {
+        return "/travel-details";
+    }
+    @GetMapping("/details/{id}")
+    public String search(Model model, @PathVariable long id) {
+
+        //model.addAttribute("travels", filteredTravels);
+        return "/trips";
+    }
+
+
+*/
 
 }

@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.grzywacz.traveloffice.hotels.HotelType;
 import com.grzywacz.traveloffice.airport.Airport;
 import com.grzywacz.traveloffice.airport.AirportRepository;
 import com.grzywacz.traveloffice.city.City;
 import com.grzywacz.traveloffice.city.CityRepository;
 import com.grzywacz.traveloffice.hotels.Hotel;
 import com.grzywacz.traveloffice.hotels.HotelRepository;
+import com.grzywacz.traveloffice.hotels.HotelType;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +32,8 @@ public class TravelService {
     public List<TravelDto> getTravels() {
         List<Travel> all = travelRepository.findAllOrderByDateFromDesc();
         return all.stream()
-                  .map(it -> new TravelDto(it.getId(), it.getName(), it.getDescription(), it.getDateFrom(), it.getDateTo(), it.getFromCity().getName(), it.getToCity().getName()))
+                  .map(it -> new TravelDto(it.getId(), it.getName(), it.getDescription(), it.getDateFrom(), it.getDateTo(), it.getFromCity().getName(), it.getToCity().getName(),
+                                           it.isPromoted()))
                   .limit(5)
                   .collect(Collectors.toList());
     }
@@ -46,6 +47,15 @@ public class TravelService {
             travelDto.setName(it.getName());
             travelDto.setDescription(it.getDescription());
             travelDto.setFromCityId(it.getFromCity().getId());
+            travelDto.setCityTo(it.getToCity().getName());
+            travelDto.setCityFrom(it.getFromCity().getName());
+            travelDto.setHotelName(it.getToHotel().getName());
+            travelDto.setDateFrom(it.getDateFrom());
+            travelDto.setDateTo(it.getDateTo());
+            travelDto.setFromAirportName(it.getFromAirport().getName());
+            travelDto.setDescription(it.getDescription());
+            travelDto.setAdultPrice(it.getAdultPrice());
+            travelDto.setKidPrice(it.getKidPrice());
         });
         return travelDto;
     }
@@ -78,7 +88,12 @@ public class TravelService {
         travel.setAvailableSlotsForKids(createTravelDto.getKidPlaces());
         HotelType hotelType = HotelType.valueOf(createTravelDto.getHotelType());
         travel.setHotelType(hotelType);
-        travel.setPromoted(createTravelDto.getIsPromoted());
+        if (createTravelDto.getIsPromoted() == null) {
+            travel.setPromoted(false);
+        } else {
+            travel.setPromoted(createTravelDto.getIsPromoted());
+        }
+
         travelRepository.save(travel);
     }
 

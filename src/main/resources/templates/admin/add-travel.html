@@ -15,7 +15,7 @@
                 console.log("selected city "+ cityId)
                  $.ajax({
                             type: "GET",
-                            url: "/travel/airport/" + cityId,
+                            url: "/airport/" + cityId,
                             dataType: 'JSON',
                             success: function (data) {
                                 var option = "";
@@ -33,7 +33,7 @@
                 console.log("selected city "+ cityId)
                 $.ajax({
                            type: "GET",
-                           url: "/travel/airport/" + cityId,
+                           url: "/airport/" + cityId,
                            dataType: 'JSON',
                            success: function (data) {
                                var option = "";
@@ -46,7 +46,7 @@
 
                 $.ajax({
                            type: "GET",
-                           url: "/travel/hotel/" + cityId,
+                           url: "/hotel/" + cityId,
                            dataType: 'JSON',
                            success: function (data) {
                                var option = "";

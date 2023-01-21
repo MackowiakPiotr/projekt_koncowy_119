@@ -10,57 +10,7 @@
   <script
           src="https://code.jquery.com/jquery-3.6.0.min.js"
           integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-          crossorigin="anonymous"
-  ></script>
-  <script  th:inline="javascript">
-            function getAirports() {
-              var cityId = $('#fromCitySelect').val();
-              console.log("selected city "+ cityId)
-              $.ajax({
-                       type: "GET",
-                       url: "/travel/airport/" + cityId,
-                       dataType: 'JSON',
-                       success: function (data) {
-                         var option = "";
-                         option += "<option value = " + 0 + ">Choose</option>";
-                         $.each(data, function(k, v) {
-                           option += "<option value = " + k + ">" + v + "</option>";
-                         });
-                         $("#fromAirportSelect").find('option').remove().end().append(option);
-                       }
-                     });
-            }
-
-            function fillAirportsAndHotels() {
-              var cityId = $('#toCitySelect').val();
-              console.log("selected city "+ cityId)
-              $.ajax({
-                       type: "GET",
-                       url: "/travel/airport/" + cityId,
-                       dataType: 'JSON',
-                       success: function (data) {
-                         var option = "";
-                         $.each(data, function(k, v) {
-                           option += "<option value = " + k + ">" + v + "</option>";
-                         });
-                         $("#toAirportSelect").find('option').remove().end().append(option);
-                       }
-                     });
-
-              $.ajax({
-                       type: "GET",
-                       url: "/travel/hotel/" + cityId,
-                       dataType: 'JSON',
-                       success: function (data) {
-                         var option = "";
-                         $.each(data, function(k, v) {
-                           option += "<option value = " + k + ">" + v + "</option>";
-                         });
-                         $("#toHotelSelect").find('option').remove().end().append(option);
-                       }
-                     });
-            }
-        </script>
+          crossorigin="anonymous"></script>
 
 </head>
 <body style="background-color: #F9F9F9;">

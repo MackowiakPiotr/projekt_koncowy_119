@@ -11,4 +11,10 @@ import org.springframework.stereotype.Repository;
 public interface TravelRepository extends JpaRepository<Travel, Long> {
     @Query("SELECT t FROM Travel t order by t.dateFrom desc")
     List<Travel> findAllOrderByDateFromDesc();
+
+    @Query("SELECT t FROM Travel t WHERE t.fromCity.id = ?1 OR t.toCity.id =?1")
+    List<Travel> findByFromCityOrToCity(long id);
+
+    @Query("SELECT t FROM Travel t WHERE t.toHotel.id =?1")
+    List<Travel> findByFromToHotel(long id);
 }
