@@ -79,8 +79,10 @@ CREATE TABLE `travel_order` (
     `participants` varchar(255) COLLATE utf8mb3_polish_ci DEFAULT NULL,
     `sum` double NOT NULL,
     `travel_id` bigint NOT NULL,
-    `pursher_email` varchar(45) COLLATE utf8mb3_polish_ci NOT NULL,
-    `purhser_phone` varchar(45) COLLATE utf8mb3_polish_ci NOT NULL,
+    `buyer_email` varchar(45) COLLATE utf8mb3_polish_ci NOT NULL,
+    `buyer_phone` varchar(45) COLLATE utf8mb3_polish_ci NOT NULL,
+    `buyer_first_name` varchar(45) COLLATE utf8mb3_polish_ci NOT NULL,
+    `buyer_last_name` varchar(45) COLLATE utf8mb3_polish_ci NOT NULL,
     PRIMARY KEY (`id`),
     KEY `FKb9uv3h4phf34c2up5wmaa5kcm` (`travel_id`),
     CONSTRAINT `FKb9uv3h4phf34c2up5wmaa5kcm` FOREIGN KEY (`travel_id`) REFERENCES `travel` (`id`)
