@@ -6,7 +6,6 @@ import lombok.Data;
 public class SimpleParticipantDto {
     String firstName;
     String lastName;
-
     Boolean adult = true;
 
 }

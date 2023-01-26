@@ -11,7 +11,6 @@ public enum Star {
 
     public static Star getStartByLabel(int label) {
        return switch (label) {
-           case 1 -> ONE;
            case 2 -> TWO;
            case 3 -> THREE;
            case 4 -> FOUR;

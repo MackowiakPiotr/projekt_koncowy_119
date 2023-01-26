@@ -66,7 +66,6 @@ public class AdminController {
     @GetMapping("/travel/edit/{id}")
     public String travelEdit(Model model, @PathVariable long id ) {
         TravelDto travel = travelService.getTravelById(id);
-      //  model.addAttribute("cities", cityRepository.findAll());
         model.addAttribute("travel", travel);
         return "admin/edit-travel";
     }
@@ -115,7 +114,6 @@ public class AdminController {
 
     @PostMapping("/country/add")
     public String addCountry(Model model,@ModelAttribute CountryDto countryDto) {
-      //  continentService.addContinent(continentDto);
         countryService.addCountry(countryDto);
         return "redirect:/admin/countries";
     }
@@ -135,7 +133,6 @@ public class AdminController {
 
     @PostMapping("/city/add")
     public String addCity(Model model,@ModelAttribute CityDto cityDto) {
-        //  continentService.addContinent(continentDto);
         cityService.addCity(cityDto);
         return "redirect:/admin/cities";
     }

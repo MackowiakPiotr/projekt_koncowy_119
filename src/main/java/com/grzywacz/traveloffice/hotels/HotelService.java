@@ -49,10 +49,6 @@ public class HotelService {
 
     public boolean checkHotelCanBeDelete(long id) {
         List<Travel> byToHotel = travelRepository.findByFromToHotel(id);
-        if (byToHotel.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return byToHotel.isEmpty();
     }
 }
