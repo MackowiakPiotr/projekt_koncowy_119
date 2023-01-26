@@ -88,3 +88,19 @@ CREATE TABLE `travel_order` (
     CONSTRAINT `FKb9uv3h4phf34c2up5wmaa5kcm` FOREIGN KEY (`travel_id`) REFERENCES `travel` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_polish_ci;
 
+CREATE TABLE `user` (
+    `id` bigint NOT NULL AUTO_INCREMENT,
+    `username` varchar(255) COLLATE utf8mb3_polish_ci DEFAULT NULL,
+    `password` varchar(255) COLLATE utf8mb3_polish_ci DEFAULT NULL,
+    `enabled` BIT(1) COLLATE utf8mb3_polish_ci DEFAULT NULL,
+    `last_login_date` date,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_polish_ci;
+
+CREATE TABLE `authority` (
+     `id` bigint NOT NULL AUTO_INCREMENT,
+     `user_id` bigint not null,
+     `authority` varchar(255) COLLATE utf8mb3_polish_ci DEFAULT NULL,
+     PRIMARY KEY (`id`),
+     FOREIGN KEY (user_id) REFERENCES user(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_polish_ci;

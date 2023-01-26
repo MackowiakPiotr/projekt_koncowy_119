@@ -1,3 +1,6 @@
+-- admin/password
+insert into user (username, password, enabled) values ('admin','$2a$12$e87CXrqgg275OBt4yvPnmeBudCNe.YLKuCqIE/h4QGfL6QAVzLJU.',1);
+insert into authority (user_id, authority) values ((select id from user where username='admin'), 'ADMIN');
 
 insert into continent(name) values ('Europe');
 insert into continent(name) values ('Asia');
