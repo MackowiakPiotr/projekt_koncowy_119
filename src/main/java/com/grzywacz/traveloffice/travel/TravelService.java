@@ -32,8 +32,12 @@ public class TravelService {
     public List<TravelDto> getTravels() {
         List<Travel> all = travelRepository.findAllOrderByDateFromDesc();
         return all.stream()
-                  .map(it -> new TravelDto(it.getId(), it.getName(), it.getDescription(), it.getDateFrom(), it.getDateTo(), it.getFromCity().getName(), it.getToCity().getName(),
-                                           it.isPromoted()))
+                  .map(it -> {
+                      TravelDto travelDto = new TravelDto(it.getId(), it.getName(), it.getDescription(), it.getDateFrom(), it.getDateTo(), it.getFromCity().getName(), it.getToCity().getName(),
+                                    it.isPromoted());
+                      travelDto.setAdultPrice(it.getAdultPrice());
+                      return travelDto;
+                  })
                   .limit(5)
                   .collect(Collectors.toList());
     }

@@ -22,4 +22,5 @@ public class Hotel extends BasicEntity {
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+
 }

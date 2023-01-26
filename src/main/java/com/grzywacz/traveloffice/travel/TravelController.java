@@ -31,7 +31,7 @@ public class TravelController {
         this.hotelRepository = hotelRepository;
     }
 
-    @GetMapping("/home")
+    @GetMapping
     public String showTravels(Model model) {
         List<TravelDto> travels = travelService.getTravels();
         List<TravelDto> promotingTravels = travels.stream().filter(TravelDto::getIsPromoted).toList();

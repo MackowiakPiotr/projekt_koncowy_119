@@ -6,9 +6,13 @@ nav {
   background-color: #ECA869;
 }
 .navbar-brand {
-  color: #2F5061;
   font-weight: 700;
 }
+
+.navbar-light .navbar-brand {
+  color: #2F5061;
+}
+
 .nav-link {
   font-weight: 600
 }
@@ -20,11 +24,9 @@ hr {
 .container {
   background-color: white;
   padding: 15px;
-  height: 600px;
   border-radius: 10px;
   margin-top: 100px
 }
-
 
 .btn-outline-primary {
   border-color: #ECA869;

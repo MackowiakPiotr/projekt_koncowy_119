@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Href Attribute Example</title>
+        <title>TravelOffice</title>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script
-                src="https://code.jquery.com/jquery-3.6.0.min.js"
-                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-                crossorigin="anonymous"></script>
         <link href="../static/css/client.css" th:href="@{/css/client.css}" rel="stylesheet" />
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" th:href="@{/home}">TravelOffice</a>
+                <a class="navbar-brand" th:href="@{/}">TravelOffice</a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -27,58 +23,56 @@
                 </div>
             </div>
         </nav>
-
-        <hr style="margin:0"/>
-        <div class="container" style="background-color: white; padding: 15px; height: 600px; border-radius: 10px; margin-top: 100px" >
-            <h3 style="font-weight: 900"><string>Rezerwacja wycieczki</string></h3>
-            <p>Podaj ilość osób dorosłych i dzieci </p>
-            <form method="get" th:action="@{/reservation/{travelId}(travelId=${travel.id})}" style="margin-bottom: 20px;">
-                <div class="row">
-                    <div class="col">
-                        <input type="number" th:name="adult"  class="form-control" placeholder="Ilość dorosłych">
-                    </div>
-                    <div class="col">
-                        <input type="number" class="form-control" placeholder="Ilość dzieci">
-                    </div>
-                </div>
-                <div class="d-grid gap-2" style="margin-top: 20px;">
-                    <button class="btn btn-outline-primary" type="submit" style="width:100%">Zatwierdź</button>
-                 <!--   <buton type="submit" class="btn btn-outline-primary mb-0" style="width:100%" >
-                        Zatwierdź
-                    </buton>-->
-                </div>
-            </form>
-            <th:block>
-                <h3>Twoje dane kontaktowe</h3>
-                <div class="row">
-                    <div class="col">
-                        <label for="exampleInputEmail1" class="form-label">Numer telefonu</label>
-                        <input type="text"  id ="exampleInputEmail1" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label for="exampleInputEmail1" class="form-label">Adres email</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <h3>Dane osób dorosłch</h3>
-                <th:block th:if="${adult!=null && adult>0}" >
-                  <!--  <th:block th:each="i: ${#numbers.sequence(0, adult - 1)}">-->
-                    <th:block th:each="i: ${travelReservationDto.simpleAdultDtos}">
-                  <!--  <h3 th:text="'Osoba ' + ${i}"></h3>-->
+        <div class="container">
+            <h3 style="font-weight: 900" th:text="'Rezerwacja wycieczki - ' + ${travel.name}"></h3>
+            <hr/>
+            <form th:action="@{/reservation/{travelId}(travelId=${travel.id})}" method="post" th:object="${travelReservationDto}">
+                <th:block>
+                    <h4 style="margin-top: 30px;">Dane kontaktowe osoby zamawiającej</h4>
                     <div class="row">
                         <div class="col">
-                            <label for="exampleInputEmail2" class="form-label">Numer telefonu</label>
-                            <input type="text"  id ="exampleInputEmail2" class="form-control">
+                            <input placeholder="Imie" type="text" th:field="*{buyerFirstName}" id ="firstName" class="form-control">
                         </div>
                         <div class="col">
-                            <label for="exampleInputEmail1" class="form-label">Adres email</label>
-                            <input type="text" class="form-control">
+                            <input placeholder="Nazwisko" type="text" th:field="*{buyerLastName}" id="lastName" class="form-control">
+                        </div>
+                        <div class="col">
+                            <input  placeholder="Telefon" type="text" th:field="*{buyerPhone}" id="phoneNumber" class="form-control">
+                        </div>
+                        <div class="col">
+                            <input placeholder="Email" type="text" th:field="*{buyerEmail}" id="email" class="form-control">
                         </div>
                     </div>
-                    </th:block>
+                        <h4 style="margin-top: 30px;">Dane pozostałych podróżników</h4>
+                        <div class="d-grid gap-2" style="margin-top: 20px;">
+                            <button class="btn btn-outline-primary" type="submit" style="width:100%">Dodaj osobę</button>
+                        </div>
+                        <th:block th:each="row,rowStat: ${travelReservationDto.simpleParticipantDtos}">
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col-5">
+                                    <input placeholder="Imie" th:field="*{simpleParticipantDtos[__${rowStat.index}__].firstName}"
+                                        type="text"  id ="participantFirstName" class="form-control">
+                                </div>
+                                <div class="col-5">
+                                    <input placeholder="Nazwisko"  th:field="*{simpleParticipantDtos[__${rowStat.index}__].lastName}"
+                                            type="text" class="form-control" id="participantLastName">
+                                </div>
+                                <div class="col-1 d-flex justify-content-center align-items-center">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" th:field="*{simpleParticipantDtos[__${rowStat.index}__].adult}" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">Dorosły</label>
+                                    </div>
+                                </div>
+                                <div class="col-1 d-flex justify-content-center align-items-end" >
+                                    <button class="btn btn-outline-danger" type="submit" th:name="action" th:value="'delete'+${rowStat.index}" style="width: 100%">Usuń</button>
+                                </div>
+                            </div>
+                        </th:block>
+                    <div class="d-grid gap-2" style="margin-top: 20px;">
+                        <button class="btn btn-outline-primary" type="submit" style="width:100%" th:name="action" th:value="save">Rezerwuj</button>
+                    </div>
                 </th:block>
-            </th:block>
-
+            </form>
 
         </div>
     </body>
