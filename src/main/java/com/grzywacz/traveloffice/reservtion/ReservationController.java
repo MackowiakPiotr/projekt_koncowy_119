@@ -31,6 +31,11 @@ public class ReservationController {
         model.addAttribute("travel", travelById);
         return "reservation";
     }
+    @PostMapping("/make-reservation/{travelId}")
+    public String reservation(@ModelAttribute TravelReservationDto travelReservationDto, @PathVariable long travelId, Model model){
+        reservationService.createReservation(travelReservationDto, travelId);
+        return "reservation-summary";
+    }
 
     @PostMapping("/{travelId}")
     public String reservation(@ModelAttribute TravelReservationDto travelReservationDto, Model model, @RequestParam(value = "action", required = false) String action,  @PathVariable long travelId ){
@@ -45,7 +50,11 @@ public class ReservationController {
             model.addAttribute("travel", travelById);
             return "reservation";
         } else if (action!= null && action.equals("save")) {
-            reservationService.createReservation(travelReservationDto, travelId);
+            double totalCost = reservationService.calculateCost(travelReservationDto, travelId);
+
+            model.addAttribute("totalCost", totalCost);
+            model.addAttribute("travelReservationDto", travelReservationDto);
+            model.addAttribute("travel", travelById);
             return "summary";
         } else {
             if (travelReservationDto.simpleParticipantDtos == null) {

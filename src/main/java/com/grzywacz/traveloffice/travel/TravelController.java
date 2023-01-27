@@ -48,16 +48,13 @@ public class TravelController {
                          @RequestParam(value = "cityTo", required = false) String cityTo,
                          @RequestParam(value = "dateFrom", required = false) String dateFrom,
                          @RequestParam(value = "dateTo", required = false) String dateTo) {
-        List<TravelDto> filteredTravels = travelService.getTravels();
-        if (cityFrom != null && !cityFrom.isEmpty()) {
-            filteredTravels = filteredTravels.stream().filter(it -> it.getCityFrom().equals(cityFrom)).collect(Collectors.toList());
-        }
-        if (cityTo != null && !cityTo.isEmpty()) {
-            filteredTravels = filteredTravels.stream().filter(it -> it.getCityTo().equals(cityTo)).collect(Collectors.toList());
-        }
+
+        List<TravelDto> filteredTravels =   travelService.getTravelsByFilter(cityFrom, cityTo, dateFrom, dateTo);
         model.addAttribute("travels", filteredTravels);
         model.addAttribute("cityTo", cityTo);
         model.addAttribute("cityFrom", cityFrom);
+        model.addAttribute("dateFrom", dateFrom);
+        model.addAttribute("dateTo", dateTo);
         return "search";
     }
 

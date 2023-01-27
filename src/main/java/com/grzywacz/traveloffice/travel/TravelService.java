@@ -29,6 +29,22 @@ public class TravelService {
         this.travelRepository = travelRepository;
     }
 
+    public List<TravelDto> getTravelsByFilter(String fromCity, String toCity, String dateFrom, String dateTo) {
+        List<TravelDto> travels = getTravels();
+        if (fromCity != null && !fromCity.isEmpty()) {
+            travels = travels.stream().filter(it -> it.getCityFrom().equals(fromCity)).collect(Collectors.toList());
+        }
+        if (toCity != null && !toCity.isEmpty()) {
+            travels = travels.stream().filter(it -> it.getCityTo().equals(toCity)).collect(Collectors.toList());
+        }
+        if (dateFrom != null && !dateFrom.isEmpty()) {
+            String[] split = dateFrom.split("-");
+            LocalDate of = LocalDate.of(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
+            travels = travels.stream().filter(it -> it.getDateFrom().isAfter(of)).toList();
+        }
+        return travels;
+    }
+
     public List<TravelDto> getTravels() {
         List<Travel> all = travelRepository.findAllOrderByDateFromDesc();
         return all.stream()

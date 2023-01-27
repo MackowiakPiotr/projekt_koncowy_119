@@ -37,10 +37,10 @@
                         <input type="text" class="form-control" placeholder="Miasto do" th:name="cityTo"  th:value="${cityTo}">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Data od " th:name="dateFrom">
+                        <input placeholder="Data od"  onfocus="(this.type='date')"  th:name="dateFrom" th:value="${dateFrom}" class="form-control" type="text" />
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Data do" th:name="dateTo">
+                        <input placeholder="Data do"  onfocus="(this.type='date')"  th:name="dateTo" th:value="${dateTo}" class="form-control" type="text" />
                     </div>
                 </div>
                 <div class="row " style="margin-top: 10px; margin-bottom: 20px">

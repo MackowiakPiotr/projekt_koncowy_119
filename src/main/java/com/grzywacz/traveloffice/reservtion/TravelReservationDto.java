@@ -12,4 +12,5 @@ public class TravelReservationDto {
     String buyerLastName;
     String buyerPhone;
     String buyerEmail;
+    double cost;
 }
